@@ -28,25 +28,36 @@ Incluye los diferentes módulos que implementan las funcionalidades de detecció
 * [train_lda_model](imports/train_lda_model.py): Este módulo incluye las funciones para entrenar los diferentes clasificadores utilizados. Para LDA permite, además, proyectar datos en su plano de proyección para visualizar la transformación. Para los métodos de las distancias permite aplicar análisis por discriminante de distancia para hallar parámetros ideales.
 * [training_data](imports/training_data.py): Incluye las funciones para generar y rizar patrones base, además de obtener filtros para detección y las estadísticas de Carlson de estos patrones.
 
-## Ámbitos de uso
-Se describen a continuación las diferentes modalidades de uso que se le pueden dar a este repositorio.
+A parte, se incluye un módulo `support` que aporta funcionalidades auxiliares sobre las que se apoyan los otros módulos. Se incluyen los siguientes submódulos:
+* [bursts_finding](imports/support/bursts_finding.py): Aporta los métodos de detección de bursts y extracción de los patrones buscando los primeros mínimos laterales que aparezcan. Incluye funciones para implementar Robust Gaussian Surprise, aunque necesita de mucho más refinamiento para funcionar correctamente.
+* [carlson](imports/support/carlson.py): Extrae las 20 estadísticas de Carlson de una lista de SPIs.
+* [density_functions](imports/support/density_functions.py): Incluye una función para transformar una secuencia de pulsos en su SDF y otra para transformarla en su SDD.
+* [utils](imports/support/utils.py): Aporta macros y funciones de apoyo para los otros módulos.
 
-### Generar patrones de nuevos tipos
-Las funciones que se utilizan para generar patrones y operar con ellos están en el módulo [training data](imports/training_data.py). Incluye una función para generar los patrones base, `generate_base_patterns`, y otra para los rizados de los patrones base, `generate_training_data`. La primera función genera patrones base utilizando características de su secuencia de IPIs, y la segunda genera rizados a magnitud dada por el parámetro `max_half_range`. No es recomendable alterar el parámetro `min_IPI_length` de la segunda función a menos que se sepa que es normal que aparezcan IPIs de menos de 5 unidades de tiempo. El resto de funciones se utilizan para extraer información de los mismos, o los filtrados en detección para detectar patrones simimlares a los generados.
-
-Si se desea añadir un patrón, se deben seguir estos pasos:
-1. Añadir en la macro `PATTERNS` de [utils](imports/support/utils.py) el nombre del patrón.
-2. Añadir, en la macro `PATTERNS_THRESHOLD_MAX_FACTOR`, el porcentaje respecto al valor del máximo de la SDF del patrón respecto al cual se saca la zona central del mismo, entendida como la zona entre mínimos locales por encima de dicho threshold. Lo recomendable es que esté entre 0.6 y 0.3.
-3. Añadir en `generate_base_patterns` el código que genere la secuencia de IPIs del nuevo patrón.
-
-Para observar cómo quedan los nuevos patrones se pueden utilizar estos scripts de la carpeta del mismo nombre:
-* [graph_base_patterns_IPIs_and_vibrated](scripts/graph_base_patterns_IPIs_and_vibrated.py): Grafica 5 ejemplos de patrones generados a rizados de 0, 5 y 10 unidades de tiempo.
-* [graph_base_patterns_SPIs](scripts/graph_base_patterns_SPIs.py): Grafica 500 patrones de cada tipo juntos y superpuestos a diferentes vibraciones. Recomendable usarlo para verificar la variabilidad de los patrones generados.
-* [graph_training_data_SPIs](scripts/graph_training_data_SPIs.py): Es como el anterior, pero en vez de graficarlos todos juntos, genera un pdf y muestra uno por página.
-* [perform_base_patterns_PCA](scripts/perform_base_patterns_PCA.py): Permite aplicar PCA a los patrones generados y vibrados a 5ms y 10ms.
-
-### Detectar y analizar patrones
-Para esta explicación, se presupone que se han extraído los ficheros de pulsos utilizando [este](https://github.com/angellareo/bio-utils) repositorio descrito anteriormente. Los ficheros de pulsos deben consistir en una sola columna con el instante en el que se produce cada pulso en una fila, y estar en formato (.dat). Una vez hecho esto, se deben seguir estos pasos:
-
-* Entrenar los clasificadores que se deseen usar. Los clasificadores se entrenan con los patrones registrados (ver uso anterior).
-* Utilizar el fichero [perform_signal_detection](scripts/perform_signal_detection.py) cargando los clasificadores que se deseen. Se puede copiar y adaptar el uso de los clasificadores ahora mismo implementados simplemente cambiando dónde se carga y usa cada uno.
+### Módulo scripts
+Conjunto de scripts que utilizan los módulos anteriores para llevar a cabo el análisis de secuencias de pulsos y el desarrollo del simulador. Incluye estos ficheros:
+* [analyze_generate_fake_data_script](scripts/analyze_generate_fake_data_script.py): Aplica una modalidad de surrogate implementada a un fichero de pulsos pasado con el parámetro `--filename`. Genera uno nuevo con el surrogate aplicado.
+* [debug_base_patterns_carlson_stats](scripts/debug_base_patterns_carlson_stats.py): Permite visualizar las marcas temporales de Carlson sobre 100 patrones generadosde cada tipo.
+* [debug_patterns_detection](scripts/debug_patterns_detection.py): Obtiene las SPIs detectadas en una secuencia de pulsos pasada con el parámetro `--filename` con un threshold concreto, pasado como argumento con el parámetro `--threshold`.
+* [evaluate_detection_per_noise](scripts/evaluate_detection_per_noise.py): Evalúa la detección de patrones generados por el simulador sobre una señal de pulsos de fondo por el método de Carlson en función del rizado de los patrones. Tan solo recibe el fichero con los pulsos de fondo con el parámetro `--filename`, e imprime los patrones insertados y detectados junto a los detectados no insertados, además de los porcentajes de detección por tipo, utilizando el threshold ideal para cada conjunto de patrones, en función del rizado. Se puede configurar para utilizar nuevos tipos de surrogate junto con nuevos tipos de patrones.
+* [evaluate_detection_per_noise](scripts/evaluate_detection_per_noise.py): Evalúa la detección de patrones generados por el simulador sobre una señal de pulsos de fondo por el método de Carlson en función del threshold del método. Tan solo recibe el fichero con los pulsos de fondo con el parámetro `--filename`, e imprime los patrones insertados y detectados junto a los detectados no insertados, además de los porcentajes de detección por tipo, utilizando el threshold ideal para cada conjunto de patrones, en función del threshold. Se puede configurar para utilizar nuevos tipos de surrogate junto con nuevos tipos de patrones.
+* [graph_IPIs_SDF_SDD](scripts/graph_IPIs_SDF_SDD.py): Genera una gráfica en la que se muestra la transformación por SDF y SDD de cada tipo de patrón. Para añadir uno nuevo, requiere de añadir el nombre del patrón a la hora de graficarlo (línea 22).
+* [graph_SDF_histogram_with_patterns](scripts/graph_SDF_histogram_with_patterns.py): Genera un histograma de IPIs de una secuencia de pulsos de fondo pasada por terminal con el parámetro `--filename` antes y después de insertar patrones.
+* [graph_base_patterns_IPIs_and_vibrated](scripts/graph_base_patterns_IPIs_and_vibrated.py): Genera una gráfica de 5 patrones de cada tipo vibrados a 5 y 10 milisegundos.
+* [graph_base_patterns_SPIs](scripts/graph_base_patterns_SPIs.py): Genera una gráfica en la que se muestran, a diferentes vibraciones, 50 patrones de cada tipo superpuestos. Se puede utilizar para verificar la variabilidad en la generación de patrones.
+* [graph_baseline](scripts/graph_baseline.py): Grafica los IPIs de una sección de una secuencia de pulsos pasada por terminal con el parámetro `--filename`. Se puede utilizar para visualizar diferentes secciones de la señal.
+* [graph_fitness_function_transformation](scripts/graph_fitness_function_transformation.py): Genera una gráfica que muestra la transformación que aplica la función de fitness a un scallop en diferentes imágenes consecutivas.
+* [graph_inserted_patterns_example](scripts/graph_inserted_patterns_example.py): Grafica 5 patrones de cada tipo insertados en una señal de fondo pasada por terminal con el parámetro `--filename` y transformada en su SDF.
+* [graph_og_and_surrogated_histogram](scripts/graph_og_and_surrogated_histogram.py): Genera un histograma de IPIs comparativo entre una señal de pulsos pasada por terminal con el parámetro `--filename` y esa misma señal pero transformada por surrogate.
+* [graph_signal_SDF](scripts/graph_signal_SDF.py): Grafica los 50000 primeros valores de la SDF de una señal de pulsos pasada por terminal con el parámetro `--filename`.
+* [graph_signal_boxplot](scripts/graph_signal_boxplot.py): Grafica la boxplot de la SDF de una señal de pulsos pasada por terminal con el parámetro `--filename`.
+* [graph_temporal_marks](scripts/graph_temporal_marks.py): Grafica la ubicación temporal de los marcadores St, Et, R1t, R2t, F1t y F2t en un patrón aceleración generado.
+* [graph_training_data_SPIs](scripts/graph_training_data_SPIs.py): Genera un pdf con patrones generados y rizados a 5ms para su observación individual.
+* [graph_van_rossum_schema](scripts/graph_van_rossum_schema.py): Genera una gráfica en la que se muestra el funcionamiento de la distancia de van Rossum entre dos scallops distintos.
+* [perform_LDA_projection](scripts/perform_LDA_projection.py): Genera la gráfica de la proyección de patrones test vibrados a 5ms por LDA entrenado a diferente número de parámetros de entrenamiento y con diferentes parámetros de regularización.
+* [perform_base_patterns_PCA](scripts/perform_base_patterns_PCA.py): Aplica PCA a las estadísticas de Carlson de 1500 patrones de cada tipo generados y rizados a 5 y 10 milisegundos.
+* [perform_distance_discriminant_analysis](scripts/perform_distance_discriminant_analysis.py): Efectúa el análisis por discriminante de distancia para los patrones considerados y los clasificadores por distancia definidos que requieran de hiperparámetro para localizar el hiperparámetro ideal. Actualmente se usa para Victor-Purpura y van Rossum.
+* [perform_signal_detection](scripts/perform_signal_detection.py): Este es el script al que se debe llamar para aplicar detección y clasificación en una señal. Recibe el fichero con la secuencia de pulsos a analizar con el parámetro `--filename` y el threshold a utilizar en detección con el parámetro `--threshold`. Requiere de tener guardado, al menos, un clasificador si se quiere usar para clasificación (ver siguientes ficheros). Para utilizar uno nuevo se puede copiar y pegar el código para cualquier clasificador, simplemente cambiando sus nombres por los correspondientes, ya que todos se ejecutan bajo la misma estructura, salvo LDA y QDA que utilizan las estadísticas de Carlson.
+* [train_LDAQDA_model_script](scripts/train_LDAQDA_model_script.py): Entrena clasificadores LDA y QDA y los guarda en formato .jl.
+* [train_distances_model_script](scripts/train_distances_model_script.py): Entrena clasificadores de distancia y los guarda en formato .jl.
+* [train_fitness_model_script](scripts/train_fitness_model_script.py): Entrena el clasificador fitness y lo guarda en formato .jl.
