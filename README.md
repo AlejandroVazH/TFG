@@ -68,7 +68,8 @@ Conjunto de scripts que utilizan los módulos anteriores para llevar a cabo el a
 
 El código de este github está enfocado a procesar datos de secuencias temporales de pulsos a posteriori, es decir, tras su extracción. Es a partir de estos datos desde los que se desarrolla el análisis de secuencias nuevas y métodos existentes.
 * Para analizar una señal: Lo primero que se debe hacer es procesarla usando el módulo `get_spikes`, cuya guía se puede encontrar en el github original del mismo [aquí](https://github.com/angellareo/bio-utils). Una vez obtenida la secuencia de pulsos, si solo se desea detectar patrones se puede introducir en el script `perform_signal_detection` para procesarla directamente, aunque es recomendable utilizar el script `graph_signal_boxplot` para obtener un threshold aproximado para las SPIs de corta duración.
-* Si, en el caso anterior, se conocen patrones que podrían aparecer en la señal, y se desea verificar su presencia, se deben introducir dichos patrones en el generador y entrenar los clasificadores que se deseen usar con los módulos `train_`.
+* Si, en el caso anterior, se conocen patrones que podrían aparecer en la señal, y se desea verificar su presencia, se deben introducir dichos patrones en el generador y entrenar los clasificadores que se deseen usar con los scripts `train_`.
 
-Para introducir nuevos patrones, se deben seguir estos pasos:
-1. En el módulo `training_data`, en la función 
+Para introducir nuevos patrones, o modificar con los que se trabaja, se deben seguir estos pasos:
+1. En el módulo `training_data`, en la función `generate_base_patterns`, se debe añadir la generación del patrón nuevo, añadiendo variabilidad en las partes que corresponda.
+2. Hay que añadir el patrón en la variable `PATTERNS_THRESHOLD_MAX_FACTOR` de ese mismo módulo. Además, en el módulo `utils` hay que actualizar la variable `PATTERNS` con los patrones que utilicemos.
