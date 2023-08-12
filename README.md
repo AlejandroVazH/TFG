@@ -1,5 +1,7 @@
 # Metodologías de detección, análisis y clasificación de patrones en secuencias temporales de pulsos
 
+En este github se incluyen los códigos desarrollados por Alejandro V.H., propietario de este repositorio, para el desarrollo del TFG ''Estudio y análisis de metodologías para detectar secuencias temporales de actividad neuronal''.
+
 ## Instalación
 Para utilizar este repositorio se necesita `Python 3.10.6` junto a los siguientes paquetes:
 * [Sklearn](https://scikit-learn.org/stable/install.html)
@@ -26,7 +28,7 @@ Incluye los diferentes módulos que implementan las funcionalidades de detecció
 * [insert_patterns](imports/insert_patterns.py): Inserta un conjunto de patrones en una secuencia de pulsos. La secuencia se concatena con la baseline con un IPI menor a 110 unidades de tiempo.
 * [pca_dfa](imports/pca_dfa.py): Aplica PCA a un conjunto de datos de estadísticas de Carlson etiquetados y grafica los resultados.
 * [train_lda_model](imports/train_lda_model.py): Este módulo incluye las funciones para entrenar los diferentes clasificadores utilizados. Para LDA permite, además, proyectar datos en su plano de proyección para visualizar la transformación. Para los métodos de las distancias permite aplicar análisis por discriminante de distancia para hallar parámetros ideales.
-* [training_data](imports/training_data.py): Incluye las funciones para generar y rizar patrones base, además de obtener filtros para detección y las estadísticas de Carlson de estos patrones.
+* [training_data](imports/training_data.py): Incluye las funciones para generar y rizar patrones base, además de obtener filtros para detección y las estadísticas de Carlson de estos patrones. Este es el módulo que incluye toda la funcionalidad referida en el TFG como el ''simulador de patrones''.
 
 A parte, se incluye un módulo `support` que aporta funcionalidades auxiliares sobre las que se apoyan los otros módulos. Se incluyen los siguientes submódulos:
 * [bursts_finding](imports/support/bursts_finding.py): Aporta los métodos de detección de bursts y extracción de los patrones buscando los primeros mínimos laterales que aparezcan. Incluye funciones para implementar Robust Gaussian Surprise, aunque necesita de mucho más refinamiento para funcionar correctamente.
@@ -61,3 +63,12 @@ Conjunto de scripts que utilizan los módulos anteriores para llevar a cabo el a
 * [train_LDAQDA_model_script](scripts/train_LDAQDA_model_script.py): Entrena clasificadores LDA y QDA y los guarda en formato .jl.
 * [train_distances_model_script](scripts/train_distances_model_script.py): Entrena clasificadores de distancia y los guarda en formato .jl.
 * [train_fitness_model_script](scripts/train_fitness_model_script.py): Entrena el clasificador fitness y lo guarda en formato .jl.
+
+### Funcionamiento
+
+El código de este github está enfocado a procesar datos de secuencias temporales de pulsos a posteriori, es decir, tras su extracción. Es a partir de estos datos desde los que se desarrolla el análisis de secuencias nuevas y métodos existentes.
+* Para analizar una señal: Lo primero que se debe hacer es procesarla usando el módulo `get_spikes`, cuya guía se puede encontrar en el github original del mismo [aquí](https://github.com/angellareo/bio-utils). Una vez obtenida la secuencia de pulsos, si solo se desea detectar patrones se puede introducir en el script `perform_signal_detection` para procesarla directamente, aunque es recomendable utilizar el script `graph_signal_boxplot` para obtener un threshold aproximado para las SPIs de corta duración.
+* Si, en el caso anterior, se conocen patrones que podrían aparecer en la señal, y se desea verificar su presencia, se deben introducir dichos patrones en el generador y entrenar los clasificadores que se deseen usar con los módulos `train_`.
+
+Para introducir nuevos patrones, se deben seguir estos pasos:
+1. En el módulo `training_data`, en la función 
