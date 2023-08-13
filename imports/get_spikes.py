@@ -1,3 +1,12 @@
+################################################################################
+# Módulo get_spikes
+#
+# Author: Alejandro Vázquez Huerta
+# Descripción: Este módulo hace de puente entre este repositorio y el descrito
+#              en el readme que implementa la metodología de extracción de
+#              pulsos
+################################################################################
+
 import os
 import subprocess
 from imports.support.utils import Color
