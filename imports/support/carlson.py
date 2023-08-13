@@ -1,3 +1,11 @@
+################################################################################
+# Módulo carlson
+#
+# Author: Alejandro Vázquez Huerta
+# Descripción: Este módulo implementa la extracción de las características de
+#              los bursts de Carlson
+################################################################################
+
 from imports.support.utils import MINIUM_RANGE
 
 ################################################################################
