@@ -1,3 +1,11 @@
+################################################################################
+# Módulo combine_spike_files
+#
+# Author: Alejandro Vázquez Huerta
+# Descripción: Módulo con la metodología para concatenar secuencias temporales
+#              de pulsos
+################################################################################
+
 import os
 from typing import Union
 from imports.support.utils import error_print, Color
