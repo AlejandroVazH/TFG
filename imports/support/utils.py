@@ -1,5 +1,5 @@
 ################################################################################
-# Módulo support
+# Módulo utils
 #
 # Author: Alejandro Vázquez Huerta
 # Descripción: Fichero con macros y objetos de soporte para el resto del fichero
