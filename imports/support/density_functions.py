@@ -1,3 +1,11 @@
+################################################################################
+# Módulo density_functions
+#
+# Author: Alejandro Vázquez Huerta
+# Descripción: Este módulo implementa las transformaciones por función de
+#              densidad de pulsos de secuencias temporales de pulsos.
+################################################################################
+
 import os
 import numpy as np
 from time import time
