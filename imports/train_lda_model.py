@@ -1,3 +1,13 @@
+################################################################################
+# Módulo train_lda_model
+#
+# Author: Alejandro Vázquez Huerta
+# Descripción: Este módulo originariamente solo implementaba LDA. Actualmente,
+#              implementa las clases, el entrenamiento y la aplicación de las
+#              metodologías de detección y clasificación de SPIs en una
+#              secuencia temporal de pulsos.
+################################################################################
+
 import os
 from sklearn.base import BaseEstimator
 from sklearn.utils.multiclass import unique_labels
