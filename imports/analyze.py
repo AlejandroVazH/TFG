@@ -1,3 +1,11 @@
+################################################################################
+# Módulo support
+#
+# Author: Alejandro Vázquez Huerta
+# Descripción: Módulo con las funcionalidades de análisis y repetición y
+#              transformación por surrogate de una secuencia temporal de pulsos
+################################################################################
+
 import os
 import numpy
 import matplotlib.pyplot as plt
