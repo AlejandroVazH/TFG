@@ -1,5 +1,5 @@
 ################################################################################
-# Módulo support
+# Módulo analyze
 #
 # Author: Alejandro Vázquez Huerta
 # Descripción: Módulo con las funcionalidades de análisis y repetición y
