@@ -2,7 +2,8 @@
 # Módulo support
 #
 # Author: Alejandro Vázquez Huerta
-# Descripción: Fichero con macros y objetos de soporte para el resto del fichero
+# Descripción: Módulo con las metodologías de detección de patrones en una
+#              secuencia temporal de pulsos
 ################################################################################
 
 import os
