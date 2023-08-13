@@ -1,3 +1,11 @@
+################################################################################
+# Módulo insert_patterns
+#
+# Author: Alejandro Vázquez Huerta
+# Descripción: Módulo con la funcionalidad para insertar patrones generados en
+#              una secuencia de pulsos de fondo
+################################################################################
+
 import random
 from imports.support.utils import PATTERNS
 
