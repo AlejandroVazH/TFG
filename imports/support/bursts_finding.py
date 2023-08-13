@@ -1,5 +1,5 @@
 ################################################################################
-# Módulo support
+# Módulo bursts_finding
 #
 # Author: Alejandro Vázquez Huerta
 # Descripción: Módulo con las metodologías de detección de patrones en una
