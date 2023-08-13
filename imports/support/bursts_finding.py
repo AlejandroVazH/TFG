@@ -1,3 +1,10 @@
+################################################################################
+# Módulo support
+#
+# Author: Alejandro Vázquez Huerta
+# Descripción: Fichero con macros y objetos de soporte para el resto del fichero
+################################################################################
+
 import os
 from imports.support.utils import Color, error_print, DISABLE_FACTOR_PRINTS, MINIUM_RANGE, PATTERNS
 from imports.support.density_functions import generate_SDF
