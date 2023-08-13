@@ -1,3 +1,13 @@
+################################################################################
+# Módulo training_data
+#
+# Author: Alejandro Vázquez Huerta
+# Descripción: Este módulo cuenta con el simulador de patrones, el rizador de
+#              los mismos, y el extractor de características de Carlson de estos
+#              patrones, además del filtro para detección de estos patrones.
+#              La última función no se usa.
+################################################################################
+
 import os
 from random import uniform, seed, randint, getrandbits
 from imports.support.utils import Color, PATTERNS, miliseconds_to_seconds, spikes_per_ms_to_spikes_per_s, error_print
