@@ -1,3 +1,12 @@
+################################################################################
+# Módulo pca_dfa
+#
+# Author: Alejandro Vázquez Huerta
+# Descripción: Originariamente este módulo implementaba toda la funcionalidad
+#              de los clasificadores por función discriminante y PCA.
+#              Actualmente solo implementa PCA.
+################################################################################
+
 import os
 from numpy import where, array, ndarray
 from sklearn.decomposition import PCA
