@@ -2,7 +2,7 @@
 
 En este github se incluyen los códigos desarrollados por Alejandro V.H., propietario de este repositorio, para el desarrollo del TFG ''Estudio y análisis de metodologías para detectar secuencias temporales de actividad neuronal''. Los datos de los patrones de secuencias temporales de pulsos provienen de varios experimentos realizados por el Grupo de Neurocomputación  Biológica ([GNB](https://www.uam.es/uam/investigacion/grupos-de-investigacion/detalle/f1-182)) de la Universidad Autónoma de Madrid, que han sido suministrados por el mismo:
 
-1- A. Lareo, C.G. Forlim, R.D. Pinto, P. Varona, and F.B. Rodriguez, Front. Neuroinform., 06 October 2016Volume 10 - 2016 | https://doi.org/10.3389/fninf.2016.00041.
+1- A. Lareo, C.G. Forlim, R.D. Pinto, P. Varona, and F.B. Rodriguez, Front. Neuroinform. 10:41, 06 October 2016Volume 10 - 2016 | https://doi.org/10.3389/fninf.2016.00041.
 
 2- A. Lareo, P. Varona, and F.B. Rodriguez, Front. Neuroinform., 28 June 2022 Volume 16 - 2022 | https://doi.org/10.3389/fninf.2022.912654.
 
